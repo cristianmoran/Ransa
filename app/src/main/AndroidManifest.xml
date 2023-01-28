@@ -38,11 +38,7 @@
             android:name=".ui.history.HistoryActivity"
             android:exported="true"
             android:theme="@style/Theme.RansaApp.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.virtualPass.VirtualPassActivity"
@@ -53,7 +49,11 @@
             android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.RansaApp.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
