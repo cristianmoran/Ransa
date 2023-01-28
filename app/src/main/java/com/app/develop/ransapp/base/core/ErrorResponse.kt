@@ -1,4 +1,4 @@
-package com.app.develop.ransapp.core
+package com.app.develop.ransapp.base.core
 
 data class ErrorResponse(
     val status: String?,

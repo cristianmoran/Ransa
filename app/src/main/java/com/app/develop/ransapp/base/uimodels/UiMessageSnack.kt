@@ -1,4 +1,4 @@
-package com.app.develop.ransapp.uimodels
+package com.app.develop.ransapp.base.uimodels
 
 import android.view.ViewGroup
 

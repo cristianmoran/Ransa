@@ -5,11 +5,11 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.app.develop.ransapp.core.EventResult
-import com.app.develop.ransapp.core.isAirplaneModeActive
-import com.app.develop.ransapp.core.isConnected
-import com.app.develop.ransapp.uimodels.UiLoadState
-import com.app.develop.ransapp.uimodels.UiMessageSnack
+import com.app.develop.ransapp.base.core.EventResult
+import com.app.develop.ransapp.base.core.isAirplaneModeActive
+import com.app.develop.ransapp.base.core.isConnected
+import com.app.develop.ransapp.base.uimodels.UiLoadState
+import com.app.develop.ransapp.base.uimodels.UiMessageSnack
 
 abstract class BaseViewModel() : ViewModel() {
 
