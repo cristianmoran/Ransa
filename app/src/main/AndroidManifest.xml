@@ -37,7 +37,9 @@
         <activity
             android:name=".ui.history.HistoryActivity"
             android:exported="true"
-            android:theme="@style/Theme.RansaApp.NoActionBar"/>
+            android:theme="@style/Theme.RansaApp.NoActionBar">
+
+        </activity>
         <activity
             android:name=".ui.virtualPass.VirtualPassActivity"
             android:exported="true"
