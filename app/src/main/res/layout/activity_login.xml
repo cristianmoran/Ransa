@@ -154,7 +154,7 @@
                 android:layout_height="42dp"
                 android:layout_marginTop="32dp"
                 android:gravity="center"
-                android:text="EMPRESA:"
+                android:text="SEDE/LOCAL:"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textViewEmail"
