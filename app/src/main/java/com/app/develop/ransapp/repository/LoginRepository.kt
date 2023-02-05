@@ -1,4 +1,4 @@
-package com.app.develop.ransapp.ui.login.service
+package com.app.develop.ransapp.repository
 
 import com.app.develop.ransapp.base.core.EventResult
 import com.app.develop.ransapp.ui.login.IngresarSedeRequest

@@ -1,6 +1,6 @@
 package com.app.develop.ransapp.di
 
-import com.app.develop.ransapp.ui.login.service.LoginRepository
+import com.app.develop.ransapp.repository.LoginRepository
 import com.app.develop.ransapp.ui.login.service.LoginServiceImpl
 import dagger.Binds
 import dagger.Module
