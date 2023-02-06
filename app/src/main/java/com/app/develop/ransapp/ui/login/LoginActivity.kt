@@ -1,5 +1,6 @@
 package com.app.develop.ransapp.ui.login
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -8,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.FragmentActivity
 import com.app.develop.ransapp.R
-import com.app.develop.ransapp.base.BaseActivity
+import com.app.develop.ransapp.base.BaseActivityPhoto
 import com.app.develop.ransapp.base.adapter.SpinnerAdapter
 import com.app.develop.ransapp.base.uimodels.UiLoadState
 import com.app.develop.ransapp.databinding.ActivityLoginBinding
@@ -16,15 +17,15 @@ import com.app.develop.ransapp.entity.SpinnerEntity
 import com.app.develop.ransapp.local.PreferenceManager
 import com.app.develop.ransapp.model.auth.CompanyResponse
 import com.app.develop.ransapp.model.auth.LoginResponse
-import com.app.develop.ransapp.ui.history.HistoryActivity
+import com.app.develop.ransapp.ui.scanner.ScannerQRActivity
+import com.app.develop.ransapp.ui.scanner.ScannerQRActivity.Companion.BUNDLE_CODE_SCANNED
 import com.app.develop.ransapp.ui.virtualPass.VirtualPassActivity
+import com.app.develop.ransapp.utils.registerObserverActivityResult
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.fragment_one.*
 
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
+class LoginActivity : BaseActivityPhoto(), AdapterView.OnItemSelectedListener {
 
     lateinit var binding: ActivityLoginBinding
     private var spinnerEmpresa: SpinnerEntity? = null
@@ -34,6 +35,10 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private var loginResponse: LoginResponse? = null
 
     private val viewModel: LoginViewModel by (this as FragmentActivity).viewModels()
+
+    override fun permissionCameraSuccess() {
+        searchLpnResult.launch(ScannerQRActivity.newInstance(this))
+    }
 
 
     override fun initObserver() {
@@ -61,6 +66,7 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
 
     }
+
     private fun initListSede(it: MutableList<CompanyResponse>?) {
 
 
@@ -77,6 +83,7 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         binding.spinnerSedeLocal.adapter = adapterSedeLocal
 
     }
+
     private fun initListEmpresas(it: MutableList<CompanyResponse>?) {
 
         val dataListEmpresa = mutableListOf<SpinnerEntity>()
@@ -194,21 +201,25 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         }
         binding.btnIngresarSede.setOnClickListener {
             if (spinnerSedelocalIngresa == null || spinnerSedelocalIngresa?.id == 0) {
-                showMessageToast("Seleccione Sede   asdadasd")
+                showMessageToast("Seleccione Sede ")
                 return@setOnClickListener
             }
-             viewModel.ingresarSede(
-                 spinnerSedelocalIngresa!!,
-                 loginResponse?.id,
-                 loginResponse?.token
-             )
-           // initIngresaViewScanner()
+            viewModel.ingresarSede(
+                spinnerSedelocalIngresa!!,
+                loginResponse?.id,
+                loginResponse?.token
+            )
+            // initIngresaViewScanner()
         }
         binding.btnIngresarScanner.setOnClickListener {
             val editTextTipoDoc = binding.editTextDoc.text.toString()
-            val intent = Intent(this,VirtualPassActivity::class.java)
-            intent.putExtra("editTextTipoDoc",editTextTipoDoc)
+            val intent = Intent(this, VirtualPassActivity::class.java)
+            intent.putExtra("editTextTipoDoc", editTextTipoDoc)
             startActivity(intent)
+        }
+
+        binding.constScannerScan.setOnClickListener {
+            requestRunTimePermissionForAccessCamera()
         }
     }
 
@@ -217,27 +228,11 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         visibleScanner()
     }
 
-    private fun initSpinnerAdapter() {
-        /*
-        val dataListEmpresa = mutableListOf<SpinnerEntity>()
-        val empresaEmpty = SpinnerEntity(0, "Seleccione Empresa")
-        dataListEmpresa.add(empresaEmpty)
-        val empresa = SpinnerEntity(1, "53b23cdc-1e26-4181-a49e-0ecb67e3dfb8")
-        dataListEmpresa.add(empresa)
-
-        val adapterEmpresa = SpinnerAdapter(context = baseContext, dataListEmpresa)
-        binding.spinnerEmpresa.adapter = adapterEmpresa
-        */
-/*
-        val dataListSedeLocal = mutableListOf<SpinnerEntity>()
-        val sedeLocalEmpty = SpinnerEntity(0, "Seleccione Sede/Local")
-        dataListSedeLocal.add(sedeLocalEmpty)
-        val sedeLocal = SpinnerEntity(1, "b6a3e4e5-3956-4645-8a59-a19efdf48336")
-        dataListSedeLocal.add(sedeLocal)
-
-
-        val adapterSedeLocal = SpinnerAdapter(context = baseContext, dataListSedeLocal)
-        binding.spinnerSedeLocal.adapter = adapterSedeLocal*/
+    private val searchLpnResult = registerObserverActivityResult {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val codeScanned = it.data?.getStringExtra(BUNDLE_CODE_SCANNED).orEmpty()
+            binding.editTextDoc.setText(codeScanned)
+        }
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
