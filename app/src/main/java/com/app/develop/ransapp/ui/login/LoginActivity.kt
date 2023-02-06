@@ -14,6 +14,8 @@ import com.app.develop.ransapp.base.uimodels.UiLoadState
 import com.app.develop.ransapp.databinding.ActivityLoginBinding
 import com.app.develop.ransapp.entity.SpinnerEntity
 import com.app.develop.ransapp.local.PreferenceManager
+import com.app.develop.ransapp.model.auth.CompanyResponse
+import com.app.develop.ransapp.model.auth.LoginResponse
 import com.app.develop.ransapp.ui.history.HistoryActivity
 import com.app.develop.ransapp.ui.virtualPass.VirtualPassActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,10 +48,50 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                 initDataIngresarSede(it)
             }
         }
+
         viewModel.loginIngresaSede.observe(this) {
             initIngresaViewScanner()
         }
+        viewModel.empresasObserver.observe(this) {
+            initListEmpresas(it)
+        }
+        viewModel.sedeObserver.observe(this) {
+            initListSede(it)
+        }
+
+
     }
+    private fun initListSede(it: MutableList<CompanyResponse>?) {
+
+
+        val dataListSedeLocal = mutableListOf<SpinnerEntity>()
+        val sedeLocalEmpty = SpinnerEntity(0, "Seleccione Sede")
+        dataListSedeLocal.add(sedeLocalEmpty)
+        it?.let { itLista ->
+            for (data in itLista) {
+                val empresa = SpinnerEntity(idStr = data.id, name = data.name ?: "")
+                dataListSedeLocal.add(empresa)
+            }
+        }
+        val adapterSedeLocal = SpinnerAdapter(context = baseContext, dataListSedeLocal)
+        binding.spinnerSedeLocal.adapter = adapterSedeLocal
+
+    }
+    private fun initListEmpresas(it: MutableList<CompanyResponse>?) {
+
+        val dataListEmpresa = mutableListOf<SpinnerEntity>()
+        val empresaEmpty = SpinnerEntity(0, "Seleccione Empresa")
+        dataListEmpresa.add(empresaEmpty)
+        it?.let { itLista ->
+            for (data in itLista) {
+                val empresa = SpinnerEntity(idStr = data.id, name = data.name ?: "")
+                dataListEmpresa.add(empresa)
+            }
+        }
+        val adapterEmpresa = SpinnerAdapter(context = baseContext, dataListEmpresa)
+        binding.spinnerEmpresa.adapter = adapterEmpresa
+    }
+
 
     private fun initDataIngresarSede(loginResponse: LoginResponse) {
         val dataListSedeLocal = mutableListOf<SpinnerEntity>()
@@ -104,9 +146,14 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         preferenceManager = PreferenceManager(this)
         setContentView(binding.root)
         viewModel.preferenceManager(preferenceManager)
-        initSpinnerAdapter()
+        initOBserver()
+        //initSpinnerAdapter()
         initListener()
         initView()
+    }
+
+    private fun initOBserver() {
+        viewModel.getEmpresaList()
     }
 
     private fun initListener() {
@@ -147,11 +194,12 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                 showMessageToast("Seleccione Sede   asdadasd")
                 return@setOnClickListener
             }
-            viewModel.ingresarSede(
-                spinnerSedelocalIngresa!!,
-                loginResponse?.id,
-                loginResponse?.token
-            )
+             viewModel.ingresarSede(
+                 spinnerSedelocalIngresa!!,
+                 loginResponse?.id,
+                 loginResponse?.token
+             )
+           // initIngresaViewScanner()
         }
         binding.btnIngresarScanner.setOnClickListener {
             startActivity(Intent(this, VirtualPassActivity::class.java))
@@ -164,6 +212,7 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun initSpinnerAdapter() {
+        /*
         val dataListEmpresa = mutableListOf<SpinnerEntity>()
         val empresaEmpty = SpinnerEntity(0, "Seleccione Empresa")
         dataListEmpresa.add(empresaEmpty)
@@ -172,7 +221,8 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
         val adapterEmpresa = SpinnerAdapter(context = baseContext, dataListEmpresa)
         binding.spinnerEmpresa.adapter = adapterEmpresa
-
+        */
+/*
         val dataListSedeLocal = mutableListOf<SpinnerEntity>()
         val sedeLocalEmpty = SpinnerEntity(0, "Seleccione Sede/Local")
         dataListSedeLocal.add(sedeLocalEmpty)
@@ -181,7 +231,7 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
 
         val adapterSedeLocal = SpinnerAdapter(context = baseContext, dataListSedeLocal)
-        binding.spinnerSedeLocal.adapter = adapterSedeLocal
+        binding.spinnerSedeLocal.adapter = adapterSedeLocal*/
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -189,8 +239,7 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         if (spinner.id == R.id.spinnerEmpresa) {
             val dataEntitity = parent.adapter?.getItem(position) as SpinnerEntity?
             this.spinnerEmpresa = dataEntitity
-
-
+            viewModel.getSedeLocal(dataEntitity)
         } else if (spinner.id == R.id.spinnerSedeLocal) {
             val dataEntitity = parent.adapter?.getItem(position) as SpinnerEntity?
             this.spinnerSedeLocal = dataEntitity

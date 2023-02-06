@@ -1,7 +1,7 @@
 package com.app.develop.ransapp.di
 
 import com.app.develop.ransapp.repository.LoginRepository
-import com.app.develop.ransapp.ui.login.service.LoginServiceImpl
+import com.app.develop.ransapp.repository.impl.LoginRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun provideLoginRepositoryImpl(dataRepository: LoginServiceImpl): LoginRepository
+    abstract fun provideLoginRepositoryImpl(dataRepository: LoginRepositoryImpl): LoginRepository
 
 
 

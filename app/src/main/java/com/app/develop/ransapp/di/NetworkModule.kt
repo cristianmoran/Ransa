@@ -1,6 +1,7 @@
 package com.app.develop.ransapp.di
 
-import com.app.develop.ransapp.ui.login.service.LoginService
+import com.app.develop.ransapp.service.AuthService
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,9 +12,11 @@ import retrofit2.Retrofit
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+
+
     @Provides
-    fun provideMovieApi(retrofit: Retrofit): LoginService {
-        return retrofit.create(LoginService::class.java)
+    fun provideMovieApi(retrofit: Retrofit): AuthService {
+        return retrofit.create(AuthService::class.java)
     }
 
 }

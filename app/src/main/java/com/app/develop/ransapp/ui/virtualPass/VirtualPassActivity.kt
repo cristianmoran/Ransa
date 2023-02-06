@@ -27,5 +27,8 @@ class VirtualPassActivity:BaseActivity() {
         binding.imageClose.setOnClickListener {
             startActivity(Intent(this, HistoryActivity::class.java))
         }
+        binding.buttonContinuar.setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+        }
     }
 }

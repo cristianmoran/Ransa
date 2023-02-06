@@ -78,17 +78,32 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    internal fun provideRetrofit(
+   // @Named("seguridad-api")
+    internal fun provideRetrofitSeguridad(
         gsonConverterFactory: GsonConverterFactory,okHttpClient: OkHttpClient, context: Context
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://acd-api-seguridad.herokuapp.com/v1/")
+            .baseUrl("https://acd-api-seguridad.herokuapp.com/")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .addCallAdapterFactory(CustomCallAdapterFactory(context)) //Set call to return {@link Observable}
             .build()
-    }
 
+    }
+/*
+    @Provides
+    @Singleton
+    @Named("ingreso-api")
+    internal fun provideRetrofitIngreso(
+        gsonConverterFactory: GsonConverterFactory,okHttpClient: OkHttpClient, context: Context
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://acd-api-ingreso.herokuapp.com/")
+            .client(okHttpClient)
+            .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(CustomCallAdapterFactory(context)) //Set call to return {@link Observable}
+            .build()
+    }*/
 
     @Provides
     @Singleton
