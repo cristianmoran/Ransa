@@ -78,7 +78,7 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-   // @Named("seguridad-api")
+    @Named("seguridad-api")
     internal fun provideRetrofitSeguridad(
         gsonConverterFactory: GsonConverterFactory,okHttpClient: OkHttpClient, context: Context
     ): Retrofit {
@@ -90,7 +90,7 @@ class RetrofitModule {
             .build()
 
     }
-/*
+
     @Provides
     @Singleton
     @Named("ingreso-api")
@@ -103,18 +103,21 @@ class RetrofitModule {
             .addConverterFactory(gsonConverterFactory)
             .addCallAdapterFactory(CustomCallAdapterFactory(context)) //Set call to return {@link Observable}
             .build()
-    }*/
+    }
 
     @Provides
     @Singleton
     internal fun providesInterceptor(
-        appVersion: String//, prefs: PreferenceManager
+        appVersion: String
+        ,application: Application
     ): Interceptor {
+        val preferences = com.app.develop.ransapp.local.PreferenceManager(application.baseContext)
         return Interceptor { chain ->
             val original = chain.request()
             val requestBuilder = original.newBuilder()
                 .header("X-Version-App", appVersion)
-                //.header("Authorization", "Bearer ${prefs.getToken()}")
+                //.header("Authorization", "Bearer ${preferences.getToken()}")
+                .header("auth-token", "${preferences.getToken()}")
                 .method(original.method, original.body)
             val request = requestBuilder.build()
             chain.proceed(request)

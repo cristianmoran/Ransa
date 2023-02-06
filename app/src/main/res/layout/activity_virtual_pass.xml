@@ -135,6 +135,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textViewNum"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="394532"
@@ -163,7 +164,7 @@
                     app:layout_constraintGuide_percent="0.24" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textViewNombre"
+                    android:id="@+id/textViewNombre2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -176,6 +177,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textViewNombreInput"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Marian Selena Torres"
@@ -204,7 +206,7 @@
                     app:layout_constraintGuide_percent="0.24" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textViewDni"
+                    android:id="@+id/textViewDnii"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -217,6 +219,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textViewDniInput"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="73032945"
@@ -244,7 +247,7 @@
                     app:layout_constraintGuide_percent="0.24" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textViewVisitado"
+                    android:id="@+id/textViewVisitadoo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -257,6 +260,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textViewVisitadoInput"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="73032945"
@@ -297,6 +301,7 @@
                     app:layout_constraintGuide_percent="0.24" />
 
                 <androidx.appcompat.widget.AppCompatEditText
+                   android:id="@+id/textViewFechaInput"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="05/05/2022 - 10:00 - 12:00"
@@ -338,6 +343,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textViewSedeInput"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="San Agustin"
@@ -378,6 +384,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textViewZonaInput"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Verde"

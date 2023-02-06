@@ -107,7 +107,7 @@ class LoginViewModel @Inject constructor(
         id?.let { it ->
             token?.let { itToken ->
                 viewModelScope.launch {
-                    val request = IngresoSedeRequest(it, spinnerSedelocalIngresa.name, itToken)
+                    val request = IngresoSedeRequest(it, spinnerSedelocalIngresa.idStr?:"62519d63-e411-421b-bf9e-47b9bcfb9e99", itToken)
                     loadingStateLivaData.value = UiLoadState.Loading
                     when (val response = loginRepository.ingresarSede(request)) {
                         is EventResult.Success -> {

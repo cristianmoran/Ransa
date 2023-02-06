@@ -9,8 +9,7 @@ import javax.inject.Inject
 class LoginRepositoryImpl
 @Inject constructor(
     private val authService: AuthService
-) :
-    LoginRepository {
+) : LoginRepository {
 
 
     override suspend fun login(loginRequest: LoginRequest): EventResult<LoginResponse> {

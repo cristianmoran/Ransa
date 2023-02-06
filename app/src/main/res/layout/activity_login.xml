@@ -372,6 +372,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewScannerSubtitle">
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editTextDoc"
+                    android:text="2023-01-2571498"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:hint="Ingresa aqui"

@@ -17,11 +17,6 @@ interface AuthService {
     suspend fun login(@Body request: LoginRequest): EventResult<LoginResponse>
 
 
-    /*
-    @GET("v1/auth/sedes")
-    suspend fun getCampus(@Body request: CredentialsRequest): EventResult<LoginResponse>*/
-
-
     @GET("v1/auth/sedes")
     suspend fun getCampus(
         @Query("idempresa") idempresa: String,

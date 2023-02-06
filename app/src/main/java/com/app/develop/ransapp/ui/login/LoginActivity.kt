@@ -97,10 +97,13 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         val dataListSedeLocal = mutableListOf<SpinnerEntity>()
         val sedeLocalEmpty = SpinnerEntity(0, "Seleccione Sede")
         dataListSedeLocal.add(sedeLocalEmpty)
-        val sedeLocal = SpinnerEntity(1, loginResponse.id)
-        dataListSedeLocal.add(sedeLocal)
-        val adapterSedeLocal = SpinnerAdapter(context = baseContext, dataListSedeLocal)
-        binding.spinnerSedeTrabajar.adapter = adapterSedeLocal
+        spinnerSedeLocal?.let {
+            val sedeLocal = SpinnerEntity(name = it.name, idStr = it.idStr)
+            dataListSedeLocal.add(sedeLocal)
+            val adapterSedeLocal = SpinnerAdapter(context = baseContext, dataListSedeLocal)
+            binding.spinnerSedeTrabajar.adapter = adapterSedeLocal
+        }
+
     }
 
     private fun visibleLoginSesion() {
@@ -202,7 +205,10 @@ class LoginActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
            // initIngresaViewScanner()
         }
         binding.btnIngresarScanner.setOnClickListener {
-            startActivity(Intent(this, VirtualPassActivity::class.java))
+            val editTextTipoDoc = binding.editTextDoc.text.toString()
+            val intent = Intent(this,VirtualPassActivity::class.java)
+            intent.putExtra("editTextTipoDoc",editTextTipoDoc)
+            startActivity(intent)
         }
     }
 
