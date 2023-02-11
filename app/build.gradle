@@ -3,22 +3,36 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
     id 'androidx.navigation.safeargs.kotlin'
     id 'dagger.hilt.android.plugin'
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
+    def appName = "RansaApp"
     namespace 'com.app.develop.ransapp'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.app.develop.ransapp"
+        applicationId "com.ransa.app"
         minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    variantFilter { variant ->
+        if (variant.buildType.name == 'debug' || variant.buildType.name == 'release')
+            setIgnore(true)
     }
 
     applicationVariants.all { variant ->
@@ -31,10 +45,52 @@ android {
         }
     }
 
+    signingConfigs {
+        dev {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+
+        prod {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
-        release {
+        dev {
+            versionNameSuffix ".0"
+            signingConfig signingConfigs.dev
+            debuggable true
+            applicationIdSuffix ".dev"
+            minifyEnabled true
+            manifestPlaceholders = [marca_prefix: "${appName}", build_prefix: 'DEV']
+        }
+
+        preProd {
+            versionNameSuffix ".0"
+            signingConfig signingConfigs.prod
+            debuggable true
             minifyEnabled false
+            manifestPlaceholders = [marca_prefix: "${appName}", build_prefix: '']
+        }
+
+        prod {
+            versionNameSuffix ".0"
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.prod
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [marca_prefix: "${appName}", build_prefix: '']
         }
     }
     compileOptions {
@@ -75,6 +131,12 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-vision:20.1.3'
     implementation 'com.google.zxing:core:3.4.0'
+
+    //Firebase
+    implementation platform("com.google.firebase:firebase-bom:29.0.2")
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-messaging'
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

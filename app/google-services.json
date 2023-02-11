@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "962954904456",
+    "project_id": "ransa-dev",
+    "storage_bucket": "ransa-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962954904456:android:7461fc5b4d921af45cb03d",
+        "android_client_info": {
+          "package_name": "com.ransa.app.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962954904456-gthai4nm8hpf0g79bvb9teu431d8su5c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBxAM1HJUW2fRnCvgwVVE-3RY-8pyWU6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962954904456-gthai4nm8hpf0g79bvb9teu431d8su5c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
